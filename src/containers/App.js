@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import TimelineList from '../components/TimelineList/TimelineList';
 import Order from '../components/Order/Order';
 import './App.css';
@@ -8,13 +8,13 @@ class App extends Component {
     super();
 
     this.state = {
-      items: [{ title: 'PS4 pro', price: 30000 }]
+      items: [{title: 'PS4 pro', price: 30000, type: 'hobbie'}]
     }
   }
 
   handleSubmit = (order) => {
     this.setState({
-      items: [...this.state.items,  order]
+      items: [...this.state.items, order]
     });
   };
 
@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <div className="App">
         <TimelineList items={this.state.items}/>
-        <Order handleSubmit={this.handleSubmit} />
+        <Order handleSubmit={this.handleSubmit.bind(this)}/>
       </div>
     );
   }

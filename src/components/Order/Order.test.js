@@ -1,8 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import {mount} from 'enzyme';
 import Order from './Order';
 
-const createEvent = (name, value) => ({ target: { name, value }});
+const createEvent = (name, value) => ({target: {name, value}});
 
 describe('Order', () => {
   let component;
@@ -10,7 +10,7 @@ describe('Order', () => {
 
   beforeEach(() => {
     handleSubmit = jest.fn();
-    component = mount(<Order handleSubmit={handleSubmit} />);
+    component = mount(<Order handleSubmit={handleSubmit}/>);
   });
 
   describe('Новое поле type', () => {
@@ -41,30 +41,30 @@ describe('Order', () => {
     Но, нужна такая реализация, которую можно будет потом расширить к примеру - валидацию дат, валидация типа введенных данных.
      */
     it('Заполняем только поле title и отправляем', () => {
-      component.find('[name="title"]').simulate('change',createEvent('title', 'Apple'));
+      component.find('[name="title"]').simulate('change', createEvent('title', 'Apple'));
       component.find('form').simulate('submit');
 
       expect(handleSubmit).not.toHaveBeenCalled();
     });
 
     it('Заполняем только поле price и отправляем', () => {
-      component.find('[name="price"]').simulate('change',createEvent('price', '130000'));
+      component.find('[name="price"]').simulate('change', createEvent('price', '130000'));
       component.find('form').simulate('submit');
 
       expect(handleSubmit).not.toHaveBeenCalled();
     });
 
     it('Заполняем только поле type и отправляем', () => {
-      component.find('[name="type"]').simulate('change',createEvent('type', 'Безумные траты'));
+      component.find('[name="type"]').simulate('change', createEvent('type', 'Безумные траты'));
       component.find('form').simulate('submit');
 
       expect(handleSubmit).not.toHaveBeenCalled();
     });
 
     it('Корректно заполняем поля', () => {
-      component.find('[name="title"]').simulate('change',createEvent('title', 'Apple'));
-      component.find('[name="price"]').simulate('change',createEvent('price', '130000'));
-      component.find('[name="type"]').simulate('change',createEvent('type', 'Безумные траты'));
+      component.find('[name="title"]').simulate('change', createEvent('title', 'Apple'));
+      component.find('[name="price"]').simulate('change', createEvent('price', '130000'));
+      component.find('[name="type"]').simulate('change', createEvent('type', 'Безумные траты'));
       component.find('form').simulate('submit');
 
       expect(handleSubmit.mock.calls).toEqual([[{"price": "130000", "title": "Apple", "type": "Безумные траты"}]]);
@@ -78,9 +78,9 @@ describe('Order', () => {
 
   describe('Очистка формы после отправки', () => {
     it('Проверяем, что в state инитал данные после отправки', () => {
-      component.find('[name="title"]').simulate('change',createEvent('title', 'Apple'));
-      component.find('[name="price"]').simulate('change',createEvent('price', '130000'));
-      component.find('[name="type"]').simulate('change',createEvent('type', 'Безумные траты'));
+      component.find('[name="title"]').simulate('change', createEvent('title', 'Apple'));
+      component.find('[name="price"]').simulate('change', createEvent('price', '130000'));
+      component.find('[name="type"]').simulate('change', createEvent('type', 'Безумные траты'));
       component.find('form').simulate('submit');
 
       expect(component.state()).toEqual({"price": "", "title": "", "type": ""});
