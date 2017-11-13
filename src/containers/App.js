@@ -8,7 +8,7 @@ class App extends Component {
     super();
 
     this.state = {
-      items: [{ title: 'PS4 pro', price: 30000, type: 'hobbie' }]
+      items: [{ title: 'PS4 pro', price: 30000 }]
     }
   }
 
@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <div className="App">
         <TimelineList items={this.state.items}/>
-        <Order handleSubmit={this.handleSubmit.bind(this)} />
+        <Order handleSubmit={this.handleSubmit} />
       </div>
     );
   }
