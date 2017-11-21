@@ -30,6 +30,15 @@ class App extends Component {
     database.ref('operations').push(order);
   };
 
+  createAccount = state => {
+    const keys = Object.keys(this.state.accounts);
+    const id = keys.length === 0 ? 1 : Math.max(...keys) + 1;
+
+    this.setState({
+      accounts: { ...this.state.accounts, [id]: state }
+    });
+  };
+
   componentDidMount() {
     const operationsRef = database.ref('operations');
 
@@ -56,7 +65,7 @@ class App extends Component {
                 path='/account/:accountId'
                 component={() => <Account operations={this.state.operations} onSubmit={this.handleSubmit}/>}
               />
-              <Route path='/create-account' component={CreateAccount} />
+              <Route path='/create-account' component={() => <CreateAccount createAcoount={this.createAccount}/>} />
               <Route path='/about' component={About} />
             </div>
           </div>
