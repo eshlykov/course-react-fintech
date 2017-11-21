@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+const validateRequire = value => value === '';
+
 class CreateAccount extends Component {
   constructor() {
     super();
@@ -10,7 +12,41 @@ class CreateAccount extends Component {
       description: ''
     };
 
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  validationsForm() {
+    let status = true;
+
+    Object.keys(this.state).forEach(item => {
+      if(validateRequire(this.state[item])) {
+        status = false;
+        return false;
+      }
+    });
+
+    return status;
+  }
+
+  formClear() {
+    this.setState({
+      name: '',
+      currency: '',
+      description: ''
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    if (!this.validationsForm()) {
+      return;
+    }
+
+    this.props.createAcoount(this.state);
+
+    this.formClear();
   }
 
   handleChange(event) {
@@ -21,7 +57,7 @@ class CreateAccount extends Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
         <input name="currency" type="text" value={this.state.currency} onChange={this.handleChange} />
         <input name="description" type="text" value={this.state.description} onChange={this.handleChange} />
