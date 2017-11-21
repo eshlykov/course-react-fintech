@@ -7,29 +7,40 @@ import {
 
 import './Sidebar.css';
 
-export default () => (
-  <div className='Sidebar'>
-    <div className='Sidebar__header'>
-      Счета
-    </div>
+class Sidebar extends  React.Component {
+  render() {
+    const accountsList = (this.props.accounts ? Object.entries(this.props.accounts) : [])
+      .map(([index, account]) => (
+      <NavLink to={`/account/${index}`} className='Link' activeClassName='Link--active' key={`account-${index}`}>
+        <div className='Sidebar__account'>
+          <div className='Sidebar__account-name'>
+            {account.name}
+          </div>
+          <div className='Sidebar__account-amount'>
+            <Money value={account.amount} currency={account.currency} />
+          </div>
+        </div>
+      </NavLink>
+    ));
 
-    <NavLink to='/account/321321' className='Link' activeClassName='Link--active'>
-      <div className='Sidebar__account'>
-        <div className='Sidebar__account-name'>
-          Основной
+    return (
+      <div className='Sidebar'>
+        <div className='Sidebar__header'>
+          Счета
         </div>
-        <div className='Sidebar__account-amount'>
-          <Money value={2133.231} />
-        </div>
-      </div>
-    </NavLink>
 
-    <NavLink to='/create-account' className='Link' activeClassName='Link--active'>
-      <div className='Sidebar__account'>
-        <div className='Sidebar__account-name'>
-          Добавить счет
-        </div>
+        {accountsList}
+
+        <NavLink to='/create-account' className='Link' activeClassName='Link--active'>
+          <div className='Sidebar__account'>
+            <div className='Sidebar__account-name'>
+              Добавить счет
+            </div>
+          </div>
+        </NavLink>
       </div>
-    </NavLink>
-  </div>
-);
+    );
+  }
+}
+
+export default Sidebar;
