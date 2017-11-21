@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const validateRequire = value => value === '';
 
-class CreateAccount extends Component {
+class CreateAccount extends React.Component {
   constructor() {
     super();
 
