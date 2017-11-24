@@ -21,12 +21,14 @@ export default function notes (state = [], action) {
     case REORDER_NOTE:
       const index1 = state.findIndex(note => note.id === action.fromId);
       const index2 = state.findIndex(note => note.id === action.toId);
+      const i = Math.min(index1, index2);
+      const j = Math.max(index1, index2);
       return [
-        ...state.slice(0, index1),
-        state[index2],
-        ...state.slice(index1 + 1, index2),
-        state[index1],
-        ...state.slice(index2 + 1)
+        ...state.slice(0, i),
+        state[j],
+        ...state.slice(i + 1, j),
+        state[i],
+        ...state.slice(j + 1)
       ];
     case UPDATE_NOTE:
       return state.map(note => {
