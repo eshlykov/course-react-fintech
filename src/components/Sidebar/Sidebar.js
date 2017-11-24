@@ -50,9 +50,22 @@ Sidebar.defaultProps = {
   accounts: {}
 };
 
-const mapStateToProps = state => ({
-  accounts: state.accounts
-});
+const mapStateToProps = state => {
+  const { accounts, operations } = state;
+
+  Object.keys(accounts).forEach(key => {
+    accounts[key].amount = 0;
+  });
+
+  Object.entries(operations).forEach(([_, operation]) => {
+    const account = accounts[operation.account];
+    if (account !== undefined) {
+      account.amount += isNaN(+operation.amount) ? 0 : +operation.amount;
+    }
+  });
+
+  return { accounts };
+};
 
 
 export default withRouter(connect(mapStateToProps)(Sidebar));
